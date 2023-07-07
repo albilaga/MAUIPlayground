@@ -18,10 +18,10 @@ internal static class PrismStartup
             .RegisterInstance(SemanticScreenReader.Default)
             .RegisterInstance(DeviceInfo.Current)
             .RegisterInstance(Launcher.Default);
+        ViewModelLocationProvider.Register<MainContentView, MainContentViewModel>();
     }
 
     private static void OnInitialized(IContainerProvider container)
     {
-        
     }
 }

@@ -11,51 +11,23 @@
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid RowDefinitions="*,100" BackgroundColor="Transparent">
-        <ScrollView Grid.RowSpan="2">
-            <VerticalStackLayout
-                Spacing="25"
-                Padding="30,0"
-                VerticalOptions="Center">
-
-                <Image
-                    Source="dotnet_bot.png"
-                    SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                    HeightRequest="200"
-                    HorizontalOptions="Center" />
-
-                <Label
-                    Text="Welcome to .NET Multi-platform App UI"
-                    SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="Welcome to dot net Multi platform App UI"
-                    FontSize="18"
-                    HorizontalOptions="Center" />
-
-                <Button
-                    Text="Click me"
+    <Grid>
+        <Grid RowDefinitions="Auto,*,100" BackgroundColor="Transparent" Padding="20">
+            <Label Text="This is header" FontSize="30" HorizontalTextAlignment="Center" FontAttributes="Bold"
+                   Margin="20" />
+            <mauiPlayground:MainContentView Grid.RowSpan="2" Grid.Row="1" />
+            <Button Grid.Row="2" VerticalOptions="End"
+                    Text="Click me but in below"
                     SemanticProperties.Hint="Counts the number of times you click"
-                    Command="{Binding ClickCommand}"
-                    HorizontalOptions="Center" />
+                    Command="{Binding ContinueCommand}"
+                    HorizontalOptions="Fill" IsVisible="{Binding IsValid}" />
+            <Button Grid.Row="2" VerticalOptions="End"
+                    Text="Click me but in below"
+                    SemanticProperties.Hint="Counts the number of times you click"
+                    IsEnabled="False"
+                    HorizontalOptions="Fill"
+                    IsVisible="{Binding IsValid,Converter={StaticResource InvertedBoolConverter}}" />
 
-                <Label
-                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eleifend vitae quam vel dignissim. Donec quis urna diam. Vivamus auctor lacus id diam placerat, ac dapibus justo elementum. Duis vehicula odio id varius aliquam. Quisque iaculis eget ante nec finibus. Aliquam aliquet sed enim eget tristique. Pellentesque vitae est ut nisi ultricies ultricies non ac augue. Etiam imperdiet ut risus at facilisis.
-
-Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean mollis tristique arcu, at volutpat nibh blandit vitae. Nullam id pharetra ipsum. Vivamus interdum gravida ante ac semper. Praesent a cursus orci. In porttitor sodales accumsan. Donec luctus porttitor pharetra. Nulla eu scelerisque arcu.
-
-Fusce elit lacus, tempor et erat ac, varius fringilla elit. Etiam sagittis diam eu magna volutpat, dictum commodo nibh facilisis. Nullam at vestibulum augue. Curabitur elit est, lobortis posuere velit id, cursus iaculis nulla. Integer fermentum ligula in pretium pulvinar. Sed rhoncus, mauris id auctor dictum, lacus sapien ullamcorper mi, nec pharetra sapien nisl sit amet sapien. Nam varius id turpis vel lobortis. Duis sit amet turpis velit. Ut at eros sollicitudin ante iaculis tristique. Donec nec ante vitae enim efficitur imperdiet. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-
-Pellentesque dolor ipsum, pharetra ac tincidunt nec, semper a mauris. Nullam vitae maximus justo, quis volutpat nulla. Pellentesque sed nibh leo. Aenean accumsan justo tortor, eget iaculis nisi accumsan ut. Curabitur suscipit dignissim ornare. Vivamus molestie sed nunc vitae malesuada. Cras vitae massa vel velit ullamcorper ultricies. Maecenas magna lacus, maximus ut accumsan ac, facilisis at dui. Praesent commodo fermentum purus, sit amet convallis sapien posuere vel. Nulla mollis lacus non dolor faucibus, vel fringilla nibh condimentum. Integer commodo dictum mi condimentum luctus. In sodales tempus nisl, eget mollis velit fringilla et. Morbi a massa nec turpis varius elementum at sit amet metus.
-
-Fusce dictum viverra diam, id porta orci eleifend at. Quisque placerat elit ac lorem condimentum imperdiet. Praesent tristique aliquam velit, vel gravida sem aliquam vitae. Nam sollicitudin augue et dapibus bibendum. Aliquam nec convallis justo, quis tempus libero. Mauris porttitor sem sit amet tortor aliquam, laoreet consectetur dolor eleifend. Nam pulvinar dui eu lacus commodo auctor. Donec mattis interdum lorem, vel elementum lectus mattis imperdiet. Mauris auctor dignissim dui, ut varius nisi volutpat ut. Morbi in sapien nec ante efficitur faucibus. Pellentesque ac lacinia dolor, sed scelerisque elit."
-                    SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="Welcome to dot net Multi platform App UI"
-                    FontSize="18"
-                    HorizontalOptions="Center" />
-
-            </VerticalStackLayout>
-        </ScrollView>
-        <BoxView Grid.Row="1" BackgroundColor="Red" IsVisible="{Binding IsValid}" />
-        <BoxView Grid.Row="1" BackgroundColor="Green"
-                 IsVisible="{Binding IsValid,Converter={StaticResource InvertedBoolConverter}}" />
+        </Grid>
     </Grid>
 </ContentPage>

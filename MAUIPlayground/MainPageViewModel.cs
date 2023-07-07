@@ -2,32 +2,47 @@ using System.Windows.Input;
 
 namespace MAUIPlayground;
 
-public class MainPageViewModel : BindableBase
+public class SelectedItemChanged : PubSubEvent<ItemViewModel>
 {
-    private readonly IDeviceInfo _deviceInfo;
+}
+
+public class MainPageViewModel : BindableBase, IDestructible
+{
+    private ItemViewModel _selectedItem;
+    private readonly SubscriptionToken _subscriptionToken;
+
 
     private bool _isValid;
 
     public bool IsValid
     {
         get => _isValid;
-        private set
-        {
-            if (SetProperty(ref _isValid, value))
-            {
-                RaisePropertyChanged(nameof(IsNotValid));
-            }
-        }
+        private set => SetProperty(ref _isValid, value);
     }
 
-    public bool IsNotValid => !IsValid;
+    public ICommand ContinueCommand { get; }
 
-    private ICommand _clickCommand;
-    public ICommand ClickCommand => _clickCommand ??= new Command(() => IsValid = true);
-
-    public MainPageViewModel(IDeviceInfo deviceInfo)
+    public MainPageViewModel(IPageDialogService pageDialogService, IEventAggregator eventAggregator)
     {
-        _deviceInfo = deviceInfo;
-        RaisePropertyChanged(nameof(IsNotValid));
+        _subscriptionToken = eventAggregator.GetEvent<SelectedItemChanged>()
+            .Subscribe(selectedItem =>
+            {
+                _selectedItem = selectedItem;
+                IsValid = true;
+            });
+        ContinueCommand = new Command(() =>
+        {
+            if (_selectedItem is null)
+            {
+                return;
+            }
+
+            pageDialogService.DisplayAlertAsync("Success", $"Selected item is {_selectedItem.Name}", "Ok");
+        });
+    }
+
+    public void Destroy()
+    {
+        _subscriptionToken.Dispose();
     }
 }

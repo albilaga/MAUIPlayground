@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mauiPlayground="clr-namespace:MAUIPlayground"
+             xmlns:mvvm="http://prismlibrary.com"
+             x:DataType="mauiPlayground:MainContentViewModel"
+             mvvm:ViewModelLocator.AutowireViewModel="Automatic"
+             x:Class="MAUIPlayground.MainContentView">
+    <ScrollView>
+        <StackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+            <StackLayout BindableLayout.ItemsSource="{Binding Items}" Spacing="30">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="mauiPlayground:ItemViewModel">
+                        <Button Text="{Binding Name}" FontSize="20"
+                                CommandParameter="{Binding .}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type mauiPlayground:MainContentViewModel}},Path=SelectItemCommand}">
+                            <Button.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected}" TargetType="Button" Value="True">
+                                    <Setter Property="Button.Text" Value="Selected" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+            <Label Text="This is footer" />
+            <ContentView HeightRequest="150" />
+        </StackLayout>
+    </ScrollView>
+</ContentView>
