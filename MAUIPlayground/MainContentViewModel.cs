@@ -2,7 +2,7 @@ using System.Windows.Input;
 
 namespace MAUIPlayground;
 
-public class MainContentViewModel
+public class MainContentViewModel : BindableBase
 {
     private ItemViewModel? _selectedItem;
 
