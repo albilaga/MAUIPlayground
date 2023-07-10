@@ -2,8 +2,9 @@
 
 public partial class MainPage : ContentPage
 {
-    public MainPage()
+    public MainPage(IRegionManager regionManager)
     {
         InitializeComponent();
+        // regionManager.RegisterViewWithRegion(nameof(MainContentView), typeof(MainContentView));
     }
 }
