@@ -35,9 +35,10 @@ internal static class PrismStartup
             .RegisterInstance(DeviceInfo.Current)
             .RegisterInstance(Launcher.Default)
             .RegisterForRegionNavigation<MainContentView, MainContentViewModel>();
-
+        
         var regionManager = containerRegistry.GetContainer().Resolve<IRegionManager>();
-        regionManager.RegisterViewWithRegion(nameof(MainContentView), typeof(MainContentView));
+        regionManager.RegisterViewWithRegion(nameof(MainLazyView), typeof(LazyView<MainContentView>));
+        // regionManager.RegisterViewWithRegion(nameof(MainLazyView))
     }
 
     private static void OnInitialized(IContainerProvider container)

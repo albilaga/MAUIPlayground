@@ -17,7 +17,7 @@
         <Grid RowDefinitions="Auto,*,100" BackgroundColor="Transparent" Padding="20">
             <Label Text="This is header" FontSize="30" HorizontalTextAlignment="Center" FontAttributes="Bold"
                    Margin="20" />
-            <ContentView mvvm:RegionManager.RegionName="MainContentView" mvvm:RegionManager.DefaultView="MainContentView" Grid.RowSpan="2" Grid.Row="1" />
+            <mauiPlayground:MainLazyView Grid.RowSpan="2" Grid.Row="1" />
             <Button Grid.Row="2" VerticalOptions="End"
                     Text="Click me but in below"
                     SemanticProperties.Hint="Counts the number of times you click"
