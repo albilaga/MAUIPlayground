@@ -11,6 +11,6 @@
             <Button Text="Go Back" Command="{Binding ClickCommand,Mode=OneTime}" />
         </VerticalStackLayout>-->
         <mauiPlayground:LazyView x:TypeArguments="mauiPlayground:SecondContentView" VerticalOptions="Center"
-                                 HorizontalOptions="Center" />
+                                 HorizontalOptions="Center" x:Name="LazyView"/>
     </ContentPage.Content>
 </ContentPage>

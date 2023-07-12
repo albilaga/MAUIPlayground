@@ -5,6 +5,8 @@ namespace MAUIPlayground;
 public class LazyView<TView> : ContentView
     where TView : ContentView, new()
 {
+    public ContentPage? ParentPage { get; set; }
+
     public LazyView()
     {
         Content = new LoadingView();
@@ -17,10 +19,17 @@ public class LazyView<TView> : ContentView
         var view = PrismStartup.Container.Resolve<TView>();
         if (view.BindingContext is null && view is IViewModelAware viewModelAware)
         {
-            view.BindingContext = PrismStartup.Container.Resolve(viewModelAware.ViewModelType);
+            if (ParentPage?.BindingContext is BaseViewModel baseViewModel)
+            {
+                view.BindingContext = PrismStartup.Container.Resolve(viewModelAware.ViewModelType,
+                    args: new object[]{baseViewModel.NavigationService});
+            }
+            else
+            {
+                view.BindingContext = PrismStartup.Container.Resolve(viewModelAware.ViewModelType);
+            }
         }
 
         Content = view;
-
     }
 }

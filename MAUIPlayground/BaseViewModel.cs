@@ -2,16 +2,16 @@ namespace MAUIPlayground;
 
 public abstract class BaseViewModel : BindableBase
 {
-    private readonly INavigationService _navigationService;
+    public INavigationService NavigationService { get; }
 
     protected BaseViewModel(INavigationService navigationService)
     {
-        _navigationService = navigationService;
+        NavigationService = navigationService;
     }
 
-    protected Task GoBackAsync() => MainThread.InvokeOnMainThreadAsync(_navigationService.GoBackAsync);
+    protected Task GoBackAsync() => MainThread.InvokeOnMainThreadAsync(NavigationService.GoBackAsync);
 
-    protected Task NavigateAsync(string page) => MainThread.InvokeOnMainThreadAsync(()=>_navigationService.NavigateAsync(
+    protected Task NavigateAsync(string page) => MainThread.InvokeOnMainThreadAsync(()=>NavigationService.NavigateAsync(
         page, new NavigationParameters
         {
             { KnownNavigationParameters.Animated, false }

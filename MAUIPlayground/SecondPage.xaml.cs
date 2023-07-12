@@ -11,5 +11,6 @@ public partial class SecondPage : ContentPage
     public SecondPage()
     {
         InitializeComponent();
+        LazyView.ParentPage = this;
     }
 }
