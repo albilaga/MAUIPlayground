@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mauiPlayground="clr-namespace:MAUIPlayground"
+             x:Class="MAUIPlayground.SecondPage"
+             x:DataType="mauiPlayground:SecondPageViewModel">
+    <ContentPage.Content>
+        <!--<VerticalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label Text="This is second page" />
+            <Button Text="Go Back" Command="{Binding ClickCommand,Mode=OneTime}" />
+        </VerticalStackLayout>-->
+        <mauiPlayground:LazyView x:TypeArguments="mauiPlayground:SecondContentView" VerticalOptions="Center"
+                                 HorizontalOptions="Center" />
+    </ContentPage.Content>
+</ContentPage>

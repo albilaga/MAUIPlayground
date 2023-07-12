@@ -6,9 +6,10 @@ public class SelectedItemChanged : PubSubEvent<ItemViewModel>
 {
 }
 
-public class MainPageViewModel : BindableBase, IDestructible
+public class MainPageViewModel : BaseViewModel, IDestructible
 {
-    private ItemViewModel _selectedItem;
+    private ItemViewModel? _selectedItem;
+    
     private readonly SubscriptionToken _subscriptionToken;
 
 
@@ -22,7 +23,8 @@ public class MainPageViewModel : BindableBase, IDestructible
 
     public ICommand ContinueCommand { get; }
 
-    public MainPageViewModel(IPageDialogService pageDialogService, IEventAggregator eventAggregator)
+    public MainPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(
+        navigationService)
     {
         _subscriptionToken = eventAggregator.GetEvent<SelectedItemChanged>()
             .Subscribe(selectedItem =>
@@ -37,7 +39,7 @@ public class MainPageViewModel : BindableBase, IDestructible
                 return;
             }
 
-            pageDialogService.DisplayAlertAsync("Success", $"Selected item is {_selectedItem.Name}", "Ok");
+            NavigateAsync(nameof(SecondPage));
         });
     }
 

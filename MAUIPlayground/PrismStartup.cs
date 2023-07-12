@@ -3,11 +3,14 @@ using Microsoft.Extensions.Logging;
 using Prism.DryIoc;
 using Prism.Regions.Adapters;
 using Prism.Regions.Behaviors;
+using IContainer = DryIoc.IContainer;
 
 namespace MAUIPlayground;
 
 internal static class PrismStartup
 {
+    public static IContainer Container { get; private set; }
+
     public static void Configure(PrismAppBuilder builder)
     {
         builder.RegisterTypes(RegisterTypes)
@@ -15,7 +18,7 @@ internal static class PrismStartup
             .OnInitialized(OnInitialized)
             .ConfigureRegionAdapters(ConfigureRegion)
             .ConfigureRegionBehaviors(ConfigureRegionBehaviors)
-            .OnAppStart(nameof(MainPage));
+            .OnAppStart(nameof(LoadingPage));
     }
 
     private static void ConfigureRegionBehaviors(IRegionBehaviorFactory obj)
@@ -30,15 +33,19 @@ internal static class PrismStartup
 
     private static void RegisterTypes(IContainerRegistry containerRegistry)
     {
-        containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>()
+        containerRegistry
             .RegisterInstance(SemanticScreenReader.Default)
             .RegisterInstance(DeviceInfo.Current)
             .RegisterInstance(Launcher.Default)
-            .RegisterForRegionNavigation<MainContentView, MainContentViewModel>();
-        
-        var regionManager = containerRegistry.GetContainer().Resolve<IRegionManager>();
-        regionManager.RegisterViewWithRegion(nameof(MainLazyView), typeof(LazyView<MainContentView>));
-        // regionManager.RegisterViewWithRegion(nameof(MainLazyView))
+            .RegisterForNavigation<LoadingPage>()
+            .RegisterForNavigation<MainPage>()
+            .RegisterForNavigation<SecondPage>()
+            .Register<MainContentView>()
+            .Register<MainContentViewModel>()
+            .Register<SecondContentView>()
+            .Register<SecondContentViewModel>();
+
+        Container = containerRegistry.GetContainer();
     }
 
     private static void OnInitialized(IContainerProvider container)

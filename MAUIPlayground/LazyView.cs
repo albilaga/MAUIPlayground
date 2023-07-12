@@ -1,3 +1,5 @@
+using DryIoc;
+
 namespace MAUIPlayground;
 
 public class LazyView<TView> : ContentView
@@ -12,6 +14,13 @@ public class LazyView<TView> : ContentView
     private async void Initialize()
     {
         await Task.Delay(3000);
-        Content = new TView();
+        var view = PrismStartup.Container.Resolve<TView>();
+        if (view.BindingContext is null && view is IViewModelAware viewModelAware)
+        {
+            view.BindingContext = PrismStartup.Container.Resolve(viewModelAware.ViewModelType);
+        }
+
+        Content = view;
+
     }
 }

@@ -2,14 +2,18 @@ using System.Windows.Input;
 
 namespace MAUIPlayground;
 
-public class MainContentViewModel : BindableBase
+public class MainContentViewModel : BaseViewModel
 {
     private ItemViewModel? _selectedItem;
 
     public IReadOnlyList<ItemViewModel> Items { get; }
-    public ICommand SelectItemCommand { get; }
+    private ICommand? _selectItemCommand;
+    // public ICommand SelectItemCommand { get; }
+    public ICommand SelectItemCommand =>
+        _selectItemCommand ??= new DelegateCommand(() => NavigateAsync(nameof(SecondPage)));
 
-    public MainContentViewModel(IEventAggregator eventAggregator)
+    public MainContentViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(
+        navigationService)
     {
         Items = new[]
         {
@@ -24,20 +28,21 @@ public class MainContentViewModel : BindableBase
             new ItemViewModel("Item 9"),
         };
 
-        SelectItemCommand = new Command<ItemViewModel>(selectedItem =>
-        {
-            if (_selectedItem == selectedItem)
-            {
-                return;
-            }
-
-            foreach (var item in Items)
-            {
-                item.IsSelected = item == selectedItem;
-            }
-
-            _selectedItem = selectedItem;
-            eventAggregator.GetEvent<SelectedItemChanged>().Publish(_selectedItem);
-        });
+//         SelectItemCommand = new Command<ItemViewModel>(selectedItem =>
+//         {
+//             NavigateAsync(nameof(SecondPage));
+//             /*if (_selectedItem == selectedItem)
+//             {
+//                 return;
+//             }
+//
+//             foreach (var item in Items)
+//             {
+//                 item.IsSelected = item == selectedItem;
+//             }
+//
+//             _selectedItem = selectedItem;
+//             eventAggregator.GetEvent<SelectedItemChanged>().Publish(_selectedItem);*/
+//         });
     }
 }
