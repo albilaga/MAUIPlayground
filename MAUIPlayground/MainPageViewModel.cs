@@ -4,30 +4,26 @@ namespace MAUIPlayground;
 
 public class MainPageViewModel : BindableBase
 {
-    private readonly IDeviceInfo _deviceInfo;
+    private string _text;
 
-    private bool _isValid;
-
-    public bool IsValid
+    public string Text
     {
-        get => _isValid;
-        private set
-        {
-            if (SetProperty(ref _isValid, value))
-            {
-                RaisePropertyChanged(nameof(IsNotValid));
-            }
-        }
+        get => _text;
+        private set => SetProperty(ref _text, value);
     }
 
-    public bool IsNotValid => !IsValid;
-
-    private ICommand _clickCommand;
-    public ICommand ClickCommand => _clickCommand ??= new Command(() => IsValid = true);
-
-    public MainPageViewModel(IDeviceInfo deviceInfo)
+    public MainPageViewModel()
     {
-        _deviceInfo = deviceInfo;
-        RaisePropertyChanged(nameof(IsNotValid));
+        var timer = Application.Current!.Dispatcher.CreateTimer();
+        var now = DateTime.Now;
+        timer.Tick += (sender, args) =>
+        {
+            var currentTime = DateTime.Now;
+            var seconds = (int)(currentTime - now).TotalSeconds;
+            Text = seconds % 2 == 0
+                ? "This is even second."
+                : "This is odd second.";
+        };
+        timer.Start();
     }
 }
