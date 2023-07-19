@@ -4,30 +4,10 @@ namespace MAUIPlayground;
 
 public class MainPageViewModel : BindableBase
 {
-    private readonly IDeviceInfo _deviceInfo;
+    public ICommand ClickCommand { get; }
 
-    private bool _isValid;
-
-    public bool IsValid
+    public MainPageViewModel(INavigationService navigationService)
     {
-        get => _isValid;
-        private set
-        {
-            if (SetProperty(ref _isValid, value))
-            {
-                RaisePropertyChanged(nameof(IsNotValid));
-            }
-        }
-    }
-
-    public bool IsNotValid => !IsValid;
-
-    private ICommand _clickCommand;
-    public ICommand ClickCommand => _clickCommand ??= new Command(() => IsValid = true);
-
-    public MainPageViewModel(IDeviceInfo deviceInfo)
-    {
-        _deviceInfo = deviceInfo;
-        RaisePropertyChanged(nameof(IsNotValid));
+        ClickCommand = new DelegateCommand(() => navigationService.NavigateAsync(nameof(SecondPage)));
     }
 }
