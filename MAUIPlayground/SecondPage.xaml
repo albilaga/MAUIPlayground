@@ -5,7 +5,13 @@
              xmlns:mauiPlayground="clr-namespace:MAUIPlayground"
              x:Class="MAUIPlayground.SecondPage"
              x:DataType="mauiPlayground:SecondPageViewModel">
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="Green" />
+            <GradientStop Color="Red" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
     <ContentPage.Content>
-        <Button Text="GoBack" Command="{Binding GoBack}" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Button Text="GoBack" Command="{Binding GoBack}" VerticalOptions="Center" HorizontalOptions="Center" />
     </ContentPage.Content>
 </ContentPage>

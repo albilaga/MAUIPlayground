@@ -9,7 +9,7 @@ internal static class PrismStartup
         builder.RegisterTypes(RegisterTypes)
             .ConfigureLogging(logging => logging.AddConsole())
             .OnInitialized(OnInitialized)
-            .OnAppStart(nameof(MainPage));
+            .OnAppStart($"{nameof(NavigationPage)}/{nameof(MainPage)}");
     }
 
     private static void RegisterTypes(IContainerRegistry containerRegistry)
@@ -23,6 +23,5 @@ internal static class PrismStartup
 
     private static void OnInitialized(IContainerProvider container)
     {
-        
     }
 }

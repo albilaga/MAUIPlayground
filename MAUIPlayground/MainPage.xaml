@@ -5,5 +5,16 @@
              xmlns:mauiPlayground="clr-namespace:MAUIPlayground"
              x:DataType="mauiPlayground:MainPageViewModel"
              x:Class="MAUIPlayground.MainPage">
-    <Button Text="Click Me" Command="{Binding ClickCommand}" VerticalOptions="Center" HorizontalOptions="Center" />
+
+    <ContentPage.Content>
+        <ContentView>
+            <ContentView.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="Green" />
+                    <GradientStop Color="Red" />
+                </LinearGradientBrush>
+            </ContentView.Background>
+            <Button Text="GoBack" Command="{Binding ClickCommand}" VerticalOptions="Center" HorizontalOptions="Center" />
+        </ContentView>
+    </ContentPage.Content>
 </ContentPage>
