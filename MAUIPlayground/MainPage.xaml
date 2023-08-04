@@ -10,11 +10,11 @@
         <ContentView>
             <ContentView.Background>
                 <LinearGradientBrush>
-                    <GradientStop Color="Green" />
-                    <GradientStop Color="Red" />
+                    <GradientStop Color="Green" Offset="0"/>
+                    <GradientStop Color="Red" Offset="1"/>
                 </LinearGradientBrush>
             </ContentView.Background>
-            <Button Text="GoBack" Command="{Binding ClickCommand}" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Button Text="Go To Second Page" Command="{Binding ClickCommand}" VerticalOptions="Center" HorizontalOptions="Center" />
         </ContentView>
     </ContentPage.Content>
 </ContentPage>
