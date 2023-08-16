@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace MAUIPlayground;
 
 public partial class SecondPage : ContentPage
@@ -11,5 +5,11 @@ public partial class SecondPage : ContentPage
     public SecondPage()
     {
         InitializeComponent();
+    }
+
+    protected override bool OnBackButtonPressed()
+    {
+        System.Diagnostics.Debugger.Break();
+        return base.OnBackButtonPressed();
     }
 }

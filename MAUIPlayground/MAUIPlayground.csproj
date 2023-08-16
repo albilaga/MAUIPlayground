@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+        <TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
         <OutputType>Exe</OutputType>
@@ -30,6 +29,21 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     </PropertyGroup>
 
+    <!-- Android -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+        <Compile Remove="**/iOS/**/*.cs" />
+        <None Include="**/iOS/**/*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+        <Compile Remove="**/**/*.iOS.cs" />
+        <None Include="**/**/*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+    </ItemGroup>
+    <!-- iOS -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+        <Compile Remove="**/Android/**/*.cs" />
+        <None Include="**/Android/**/*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+        <Compile Remove="**/**/*.Android.cs" />
+        <None Include="**/**/*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+    </ItemGroup>
+
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -49,11 +63,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Prism.DryIoc.Maui" Version="8.1.273-pre" />
         <PackageReference Include="Prism.Maui" Version="8.1.273-pre" />
     </ItemGroup>
+
+
+
 
 </Project>
